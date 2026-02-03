@@ -1,4 +1,6 @@
-A script that handles almost everything you need in Tower Testing: Lag protection, Software, Era Powers and Dividers, Infinity Powers, Rak's Curse and most of other skills. The only thing it doesn't do is using toggleable skills.
+## One Script to Rule Them All
+
+A script that handles almost everything you need in Tower Testing: lag protection, software, era powers and dividers, infinity powers, Rak's Curse and spams other skills. The only thing it doesn't handle is using toggleable skills.
 
 ## Dependencies
 - Cod's [Budget Exec](https://github.com/Codrineye/Codrineye-s-TPT2-Compendium/tree/main/TPT2%20Scripting/Budget%20Exec) script.
