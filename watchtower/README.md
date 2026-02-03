@@ -1,7 +1,7 @@
 An infinity climbing blueprint, inspired with mp's Zoltraak, but with a focus on a faster clear speed.
 
 ## Important note
-Your Energy module has to have a low tier, try to aim to have around 10,000 total energy.
+Your Energy module has to have a low tier, aim to have around 10,000 total energy.
 
 ## Dependencies
 [Omni-tower AI](https://github.com/rus9384/TPT2/blob/main/tower.omni/README.md)
