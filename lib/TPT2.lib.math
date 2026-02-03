@@ -1,0 +1,13 @@
+:import TPT2.lib.general
+
+; Returns the sum/product of numeric values (respectively)
+#sum($...) {lua(return string.nested("%2 + (%1)", [[{...}]]))}
+#prod($...) {lua(return string.nested("%2 * (%1)", [[{...}]]))}
+
+; Returns the absolute value of an integer/double number (respectively)
+#i.abs(number) if({number} < 0 , 0  - {number}, {number})
+#d.abs(number) if({number} < 0., 0. - {number}, {number})
+
+; Returns a minimum/maximum (respectively) of multiple values
+#min($...) {lua(return string.nested("min(%2, %1)", [[{...}]]))}
+#max($...) {lua(return string.nested("max(%2, %1)", [[{...}]]))}
