@@ -1,0 +1,13 @@
+:import TPT2.lib.general
+
+; The string containing names of all "permanent" modules
+#spells.permanent "crate.rex,sphere.energy,google.influence,spell.immolation,knight.power,boost.shoreline,guns.space"
+
+; Returns the total cost of listed era disables
+#disable.cost.total($...) {lua(return string.nested("disable.cost(%2)+(%1)", [[{...},]]):gsub("%+%(%)", ""))}
+
+; Returns true if any of listed era disables is free
+#disable.exists.free($...) {lua(return string.nested("disable.cost(%2)*(%1)", [[{...},]]):gsub("%*%(%)", ""))} == 0.
+
+; Disables next element in the elements list
+#disable.era.next($...) disable.era({lua(return string.nested("if(disable.cost(%2) >= 0., %2, %1)", [[{...}]]))})
