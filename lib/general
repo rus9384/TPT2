@@ -1,0 +1,59 @@
+; Used to collapse arithmetic, logical or multi-line expressions in the editor
+#eval(expr) {lua(return ([[{expr}]]):gsub("\n", ""))}
+
+{lua(
+
+  -- Iteratively substitutes %1 with res and %2 with the next argument in the pattern
+  -- Reads arguments from the end to the beginning
+  function string.nested(pattern, args)
+    local argt = string.args(args)
+    local res = argt[#argt]
+    for i = #argt - 1, 1, -1 do
+      res = string.substitute(pattern, res, argt[i])
+    end
+    return res
+  end
+
+  function string.substitute(pattern, ...)
+
+    if select("#", ...) > 9 then
+      error("The function supports only up 9 replacement parameters.")
+    end
+
+    local res, count = pattern
+    for i = 1, select("#", ...) do
+      local search1 = string.format("^((%%%%*)%%2)(%%%%%u)(.*)", i)
+      local search2 = string.format("(.-[^%%%%](%%%%*)%%2)(%%%%%u)(.*)", i)
+      local repl = string.format("%%1%s%%4", select(i, ...))
+      res, count = res:gsub(search1, repl, 1):gsub(search2, repl, 1)
+      while count > 0 do
+        res, count = res:gsub(search2, repl, 1)
+      end
+    end
+
+    return res
+
+  end
+
+  function string.args(args)
+
+    local res = {}
+    local first, last = 1, args:find([[([,'"])]], 1)
+
+    while last do
+      local symbol = args:sub(last, last)
+      if symbol ~= "," then
+        last = args:find(symbol, last + 1)
+      else
+        table.insert(res, args:sub(first, last - 1):match("^%s*(.-)%s*$"))
+        first = last + 1
+      end
+      last = args:find([[([,'"])]], last + 1)
+    end
+    table.insert(res, args:sub(first):match("^%s*(.-)%s*$"))
+
+    return res
+
+  end
+
+)}
