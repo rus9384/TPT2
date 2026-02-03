@@ -1,0 +1,132 @@
+:import TPT2.lib.general
+:import TPT2.lib.tower
+:import tower.omni.declarations
+
+; ======================================== SOFTWARE ========================================
+
+#software.list "{lua(return table.concat(software.list))}"
+#software.security "{lua(return table.concat(software.security))}"
+#software.length {lua(return software.length)}
+#software.count {lua(return #software.list)}
+#software.toggle.single(security, index)={{eval(
+  software.toggle("software." . sub({software.list},
+      {software.length} * {index},
+      index({software.list}, ",", {software.length} * {index}) - {software.length} * {index}),
+    s2i(sub({software.security}, {index}, 1), -1) >= {security}))}
+}
+
+; New Bounds, No Bounds and Wave Restart are not toggled
+{lua(
+
+  software = {}
+  software.list = {}
+  software.security = {}
+
+  function software.add(name, security)
+    table.insert(software.list, name)
+    table.insert(software.security, security)
+  end
+
+  software.add("autoskip", 2)
+  software.add("wavestreaming", 2)
+  software.add("wavesurge", 2)
+  software.add("criticalWavejump", 0)
+  software.add("wavemomentum", 0)
+  software.add("wavestorm", 1)
+  software.add("wavepersistence", 0)
+  software.add("waveinstability", 0)
+  software.add("wavevortex", 1)
+  software.add("wavecatalyst", 2)
+  software.add("waveendurance", 2)
+  software.add("wavemarathon", 1)
+  software.add("wavecompression", 0)
+  software.add("erasurge", 0)
+  software.add("eraburst", 0)
+  software.add("eraswirl", 0)
+  software.add("wavehorizon", 1)
+  software.add("eratunneling", 0)
+  software.add("wavebreach", 1)
+  software.add("wavefloor", 0)
+  software.add("erafloor", 0)
+  software.add("erahorizon", 0)
+  software.add("infinityhorizon", 1)
+
+  software.length = 0
+  for key, value in next, software.list do
+    software.length = math.max(software.length, #value)
+  end
+  for key, value in next, software.list do
+    software.list[key] = string.format("%s,%s", value, string.rep(" ", software.length - #value))
+  end
+  software.length = software.length + 1
+  
+)}
+
+; ======================================== INFINITY ========================================
+
+#inf.secures={{lua(
+
+  local list = {}
+
+  -- Reflect modules
+  table.insert(list, "reflect.captain")
+  table.insert(list, "sphere.energy")
+  table.insert(list, "defence.reflect")
+  table.insert(list, "reflect.wince")
+
+  -- Instant kill modules
+  table.insert(list, "aura.death")
+  table.insert(list, "grim.reaper")
+  table.insert(list, "missile.serious")
+  table.insert(list, "spell.snapOfDestiny")
+  table.insert(list, "spell.something")
+  -- no Void
+
+  -- Max HP damage modules
+  table.insert(list, "spell.firestorm")
+  table.insert(list, "aura.heartstopper")
+  table.insert(list, "spell.snowstorm")
+  table.insert(list, "stampede.goats")
+
+  -- Invulnerability modules
+  table.insert(list, "shield.immortality")
+  table.insert(list, "barrier.temporal")
+  table.insert(list, "hull.titanium")
+
+  -- Evasion modules
+  table.insert(list, "defense.daigoparry")
+  table.insert(list, "cat.power")
+  table.insert(list, "shield.universal")
+  table.insert(list, "shield.phasing")
+
+  -- Attack range modules
+  table.insert(list, "spell.radar")
+  table.insert(list, "air.hurricane")
+
+  -- Survival modules
+  table.insert(list, "defence.quantum")
+  table.insert(list, "wall.eternal")
+
+  -- Division modules
+  table.insert(list, "infinity.reflect")
+  table.insert(list, "crit.infinity")
+  table.insert(list, "attack.infinity")
+  table.insert(list, "burst.infinity")
+  table.insert(list, "sting.poison")
+  table.insert(list, "soul.harvesting")
+  table.insert(list, "spell.immolation")
+  table.insert(list, "aura.fiery")
+
+  return string.format('"%s"', table.concat(list, ","))
+
+)}}
+
+; ========================================= SPELLS =========================================
+
+#spells.ignored "{lua(return {spells.permanent} .. ",spell.raksCurse,spell.advancedheal")}"
+#spell.ignored(spell.index) contains({spells.ignored}, active.id({spell.index}))
+#dispel.check active.id(spell.index) == "spell.dispel" && negative() > 0
+#spell.check ({spell.ignored(spell.index)} || cooldown(spell.index) > 0. || {dispel.check})
+
+#hp.threshold.check health(true) < {eval((1. + (1. - 0.7) / (1. + 0.7)) / 2.)}
+#heal.check contains(active.id(spell.cast.index), "sacrifice.dark") && {hp.threshold.check}
