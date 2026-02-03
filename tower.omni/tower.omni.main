@@ -1,9 +1,7 @@
 #script.name Omni-Tower AI
 :name {script.name}
 
-:import TPT2.lib.math
 :import tower.omni.templates
-:import rnglib
 
 :budget_cap max
 
@@ -11,20 +9,17 @@ wakeup()
 game.newround()
 
 gotoif(if(health(false) <= 0., 99, start), impulse() != "game.newround" && impulse() != "wakeup")
-executesync("Script Restarter")
+execute("{accelerate_budget}")
 
 start:
   FPS.target = 60.
   inf.secures = {inf.secures}
-  pause() ; set the game on pause for safety
+  pause() ; Set the game on pause for safety
 
 software.init: ; Disable all software (except New Bounds, No Bounds, Wave Restart)
 	{software.toggle.single(3, software.index)}
   software.index = (software.index + 1) % {software.count}
   gotoif(software.init, software.index > 0)
-
-toggles:
-  ;useinstant(active.index("boost.shoreline"))
 
 lag.saver: ; Pause the game for 1 second in the beginning and during lags
   pause.set(1. / time.unscaled() < FPS.target || game.realtime() < 1.)
