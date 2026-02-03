@@ -62,6 +62,12 @@
   
 )}
 
+; ========================================== ERA ===========================================
+
+#era.divider.cost (20000. + 341. * 2000.)
+#era.divider.cost.mult 0.95^ceil((max(era.damage, era.health) / 20000.) // 0.95)
+#era.divider.cost.max {eval(ceil({era.divider.cost} * {era.divider.cost.mult}))}
+
 ; ======================================== INFINITY ========================================
 
 #inf.secures={{lua(
@@ -130,3 +136,5 @@
 
 #hp.threshold.check health(true) < {eval((1. + (1. - 0.7) / (1. + 0.7)) / 2.)}
 #heal.check contains(active.id(spell.cast.index), "sacrifice.dark") && {hp.threshold.check}
+
+#spell.pending.check energy / energy.max() < 0.7 || spell.cast.index > 0
