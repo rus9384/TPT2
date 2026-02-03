@@ -1,6 +1,9 @@
 :import TPT2.lib.general
 :import TPT2.lib.tower
+:import TPT2.lib.math
 :import tower.omni.declarations
+:import budget exec_lib
+:import rnglib
 
 ; ======================================== SOFTWARE ========================================
 
