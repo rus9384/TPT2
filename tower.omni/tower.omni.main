@@ -1,0 +1,81 @@
+#script.name Omni-Tower AI
+:name {script.name}
+
+:import tower.omni.templates
+:import rnglib
+
+:budget_cap max
+
+wakeup()
+game.newround()
+
+gotoif(if(health(false) <= 0., 99, start), impulse() != "game.newround" && impulse() != "wakeup")
+executesync("Script Restarter")
+
+start:
+  FPS.target = 60.
+  inf.secures = {inf.secures}
+  pause()
+
+software.init:
+	{software.toggle.single(3, software.index)}
+  software.index = (software.index + 1) % {software.count}
+  gotoif(software.init, software.index > 0)
+
+toggles:
+  useinstant(active.index("boost.shoreline"))
+
+lag.saver:
+  pause.set(1. / time.unscaled() < FPS.target || game.realtime() < 1.)
+
+era:
+  gotoif(infinity, finished.era)
+  {disable.era.next({era.elements})}
+	gotoif(era, {disable.exists.free({era.elements})}) ; disable all free era powers first
+  finished.era = {disable.cost.total({era.elements})} <= -10.
+
+infinity:
+  gotoif(borf, xp() < disable.inf.cost() || {finished.inf})
+  disable.inf(sub(inf.secures, 0, index(inf.secures, ",", 0)))
+  inf.secures = sub(inf.secures, index(inf.secures, ",", 0) + 1, 999)
+
+borf:
+  useinstant(active.index("spell.superbounce"))
+  useinstant(active.index("spell.multishot"))
+	energy = energy(false)
+
+rak.start:
+  goto(if({finished.rak}, spells, if(energy(true) < 0.99, frame.end, rng.init)))
+
+rng.init:
+  {rng_init1}
+  {rng_init2(rng.next)}
+
+rng.next:
+  {rng_next}
+  gotoif(rnd(rng.next, 0), {rng_getrange(0, 999)} > 0)
+
+rak.cast:
+  useinstant(active.index("spell.raksCurse"))
+  counter.rak += if(energy > energy(false), 1, 0)
+  goto(frame.end)
+
+spells:
+  spell.cast.index = if({spell.check} && spell.index > 0, spell.cast.index, spell.index)
+  spell.index = if(energy / energy.max() < 0.7, 0, (spell.index + 1) % (active.count() + 1))
+  gotoif(spells, spell.index > 0)
+
+cast:
+  useinstant(if({heal.check}, active.index("spell.advancedheal"), 0))
+  useinstant(spell.cast.index)
+  useposition(spell.cast.index, vec(0., 0.))
+
+gotoif(frame.end, {finished.software} || energy / energy.max() < 0.7 || spell.cast.index > 0)
+software.main:
+	{software.toggle.single(0, software.index)}
+  software.index += 1
+  gotoif(software.main, software.index < {software.count})
+
+frame.end:
+  waitframe()
+  gotoif(lag.saver, isTowerTesting())
