@@ -1,6 +1,7 @@
 #script.name Omni-Tower AI
 :name {script.name}
 
+:import TPT2.lib.math
 :import tower.omni.templates
 :import rnglib
 
@@ -15,24 +16,33 @@ executesync("Script Restarter")
 start:
   FPS.target = 60.
   inf.secures = {inf.secures}
-  pause()
+  pause() ; set the game on pause for safety
 
-software.init:
+software.init: ; Disable all software (except New Bounds, No Bounds, Wave Restart)
 	{software.toggle.single(3, software.index)}
   software.index = (software.index + 1) % {software.count}
   gotoif(software.init, software.index > 0)
 
 toggles:
-  useinstant(active.index("boost.shoreline"))
+  ;useinstant(active.index("boost.shoreline"))
 
-lag.saver:
+lag.saver: ; Pause the game for 1 second in the beginning and during lags
   pause.set(1. / time.unscaled() < FPS.target || game.realtime() < 1.)
 
-era:
-  gotoif(infinity, finished.era)
+era.disables:
+  gotoif(era.dividers.init, finished.era.disables)
   {disable.era.next({era.elements})}
-	gotoif(era, {disable.exists.free({era.elements})}) ; disable all free era powers first
-  finished.era = {disable.cost.total({era.elements})} <= -10.
+	gotoif(era.disables, {disable.exists.free({era.elements})}) ; Disable all free era powers first
+  finished.era.disables = {disable.cost.total({era.elements})} <= -10.
+
+era.dividers.init:
+  gotoif(infinity, {finished.era.dividers} || xp() < 40000.)
+  xp = xp()
+  upgrade.era("damage", 1)
+  era.damage = if(era.damage == 0., if(xp <= xp(), -1., xp - xp()), era.damage)
+  upgrade.era("health", 1)
+  era.health = if(era.health == 0., xp - max(0., era.damage) - xp(),\
+               if(xp >= {era.divider.cost.max} && xp() >= xp, -1., era.health))
 
 infinity:
   gotoif(borf, xp() < disable.inf.cost() || {finished.inf})
@@ -42,9 +52,10 @@ infinity:
 borf:
   useinstant(active.index("spell.superbounce"))
   useinstant(active.index("spell.multishot"))
-	energy = energy(false)
+  
+energy = energy(false) ; Save current energy for future use
 
-rak.start:
+rak.start: ; Skip this section if the BP has no Rak's Curse or we have 5 stacks already
   goto(if({finished.rak}, spells, if(energy(true) < 0.99, frame.end, rng.init)))
 
 rng.init:
@@ -57,9 +68,11 @@ rng.next:
 
 rak.cast:
   useinstant(active.index("spell.raksCurse"))
-  counter.rak += if(energy > energy(false), 1, 0)
+  counter.rak += if(energy > energy(false), 1, 0) ; If energy didn't change, we didn't cast Rak's curse
   goto(frame.end)
 
+; Skill spam, ignores toggleable skills and Rak's Curse;
+; Has special handling of Dark Sacrifice, Advanced Heal and Dispel
 spells:
   spell.cast.index = if({spell.check} && spell.index > 0, spell.cast.index, spell.index)
   spell.index = if(energy / energy.max() < 0.7, 0, (spell.index + 1) % (active.count() + 1))
@@ -70,8 +83,9 @@ cast:
   useinstant(spell.cast.index)
   useposition(spell.cast.index, vec(0., 0.))
 
-gotoif(frame.end, {finished.software} || energy / energy.max() < 0.7 || spell.cast.index > 0)
-software.main:
+; All skills need to be active and era dividers need to be maximized
+gotoif(frame.end, {finished.software} || {spell.pending.check} || era.damage + era.health >= 0.)
+software.main: ; Enable all software (except New Bounds, No Bounds, Wave Restart)
 	{software.toggle.single(0, software.index)}
   software.index += 1
   gotoif(software.main, software.index < {software.count})
