@@ -1,0 +1,14 @@
+:local int software.index
+:local bool lag_saver.running
+:local int counter.rak
+:local bool finished.era
+#finished.inf inf.secures == ""
+#finished.rak counter.rak >= 5 || active.index("spell.raksCurse") <= 0
+#finished.software software.index >= {software.count}
+:local double FPS.target
+:local double energy
+:local string inf.secures
+:local int spell.index
+:local int spell.cast.index
+
+#era.elements "electricity", "darkness", "light", "water", "earth", "universal", "nature", "neutral", "fire", "air"
