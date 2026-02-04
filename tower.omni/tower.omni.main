@@ -1,4 +1,4 @@
-#script.name Omni-Tower AI
+#script.name Omni-Tower AI v1.1
 :name {script.name}
 
 :import tower.omni.templates
@@ -8,10 +8,11 @@
 wakeup()
 game.newround()
 
-gotoif(if(health(false) <= 0., 99, start), impulse() != "game.newround" && impulse() != "wakeup")
-execute("{accelerate_budget}")
+{tower.alive}
 
 start:
+  timestamp = now()
+  gss(timestamp.global.name, timestamp . "</size>")
   FPS.target = 60.
   inf.secures = {inf.secures}
   pause() ; Set the game on pause for safety
@@ -87,4 +88,4 @@ software.main: ; Enable all software (except New Bounds, No Bounds, Wave Restart
 
 frame.end:
   waitframe()
-  gotoif(lag.saver, isTowerTesting())
+  gotoif(lag.saver, {tower.alive} && gsg(timestamp.global.name) == timestamp . "</size>")
