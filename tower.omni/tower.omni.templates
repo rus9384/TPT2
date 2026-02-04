@@ -2,8 +2,11 @@
 :import TPT2.lib.tower
 :import TPT2.lib.math
 :import tower.omni.declarations
-:import budget exec_lib
 :import rnglib
+
+; ======================================== GENERIC =========================================
+
+#tower.alive isTowerTesting() && health(false) > 0.
 
 ; ======================================== SOFTWARE ========================================
 
