@@ -1,3 +1,5 @@
+:const string timestamp.global.name "<size=0>tower.omni.timestamp"
+:local double timestamp
 :local int software.index
 :local bool lag_saver.running
 :local int counter.rak
