@@ -1,0 +1,31 @@
+#script.name Watchtower AI
+:name {script.name}
+
+#timestamp.equals gsg("<size=0>watchtower.timestamp") == timestamp . "</size>"
+#wait.condition isTowerTesting() && health(false) > 0. && {timestamp.equals}
+#quit.macro gotoif(99, not({wait.condition}))
+
+:local double timestamp
+:local double time.dark.sacrifice
+
+:budget_cap max
+
+game.newround()
+
+timestamp = now()
+gss("<size=0>watchtower.timestamp", timestamp . "</size>")
+useinstant(active.index("boost.shoreline"))
+waitwhile({wait.condition} && energy(true) < 0.2)
+{quit.macro}
+useinstant(active.index("tower.super.2"))
+waitwhile({wait.condition} && energy(true) < 0.2)
+{quit.macro}
+useinstant(active.index("sacrifice.dark"))
+time.dark.sacrifice = game.time()
+waitwhile({wait.condition} && energy(true) < 0.2)
+{quit.macro}
+useinstant(active.index("stream.life"))
+waitwhile({wait.condition} && (energy(true) < 0.2 || time.dark.sacrifice + 15.0 > game.time()))
+{quit.macro}
+useinstant(active.index("sacrifice.dark"))
+goto(99)
