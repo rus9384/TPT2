@@ -2,7 +2,8 @@
 
 ### 1.1
 
-Removed the dependency from Budget Exec.
+- Removed the dependency from Budget Exec.
+- Improved tower testing check.
 
 ### 1.0
 
