@@ -1,4 +1,4 @@
-#script.name Omni-Tower AI v1.1
+#script.name Omni-Tower AI v1.2
 :name {script.name}
 
 :import tower.omni.templates
@@ -68,7 +68,7 @@ rak.cast:
   goto(frame.end)
 
 ; Skill spam, ignores toggleable skills and Rak's Curse;
-; Has special handling of Dark Sacrifice, Advanced Heal and Dispel
+; Has special handling of Dark Sacrifice, Advanced Heal, Stream of Life and Dispel
 spells:
   spell.cast.index = if({spell.check} && spell.index > 0, spell.cast.index, spell.index)
   spell.index = if(energy / energy.max() < 0.7, 0, (spell.index + 1) % (active.count() + 1))
