@@ -1,6 +1,6 @@
 :import TPT2.lib.general
 
-; The string containing names of all "permanent" modules
+; The string containing names of all "permanent" active modules
 #spells.permanent "crate.rex,sphere.energy,google.influence,spell.immolation,knight.power,boost.shoreline,guns.space"
 
 ; Returns the total cost of listed era disables
