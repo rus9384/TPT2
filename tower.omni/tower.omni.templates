@@ -14,12 +14,12 @@
 #software.security "{lua(return table.concat(software.security))}"
 #software.length {lua(return software.length)}
 #software.count {lua(return #software.list)}
-#software.toggle.single(security, index)={{eval(
+#software.toggle.single(security, index)={{multiline(
   software.toggle("software." . sub({software.list},
       {software.length} * {index},
       index({software.list}, ",", {software.length} * {index}) - {software.length} * {index}),
-    s2i(sub({software.security}, {index}, 1), -1) >= {security}))}
-}
+    s2i(sub({software.security}, {index}, 1), -1) >= {security})
+)}}
 
 ; New Bounds, No Bounds and Wave Restart are not toggled
 {lua(
@@ -72,7 +72,7 @@
 
 #era.divider.cost (20000. + 341. * 2000.)
 #era.divider.cost.mult 0.95^ceil((max(era.damage, era.health) / 20000.) // 0.95)
-#era.divider.cost.max {eval(ceil({era.divider.cost} * {era.divider.cost.mult}))}
+#era.divider.cost.max ceil({era.divider.cost} * {era.divider.cost.mult})
 
 ; ======================================== INFINITY ========================================
 
@@ -137,10 +137,11 @@
 
 #spells.ignored "{lua(return {spells.permanent} .. ",spell.raksCurse,spell.advancedheal")}"
 #spell.ignored(spell.index) contains({spells.ignored}, active.id({spell.index}))
-#dispel.check active.id(spell.index) == "spell.dispel" && negative() > 0
-#spell.check ({spell.ignored(spell.index)} || cooldown(spell.index) > 0. || {dispel.check})
+#stream.check active.id(spell.index) == "stream.life" && health.regen() <= 0.
+#dispel.check active.id(spell.index) == "spell.dispel" && negative() <= 0
+#spell.check ({spell.ignored(spell.index)} || cooldown(spell.index) > 0. || {dispel.check} || {stream.check})
 
-#hp.threshold.check health(true) < {eval((1. + (1. - 0.7) / (1. + 0.7)) / 2.)}
+#hp.threshold.check health(true) < ((1. + (1. - 0.7) / (1. + 0.7)) / 2.)
 #heal.check contains(active.id(spell.cast.index), "sacrifice.dark") && {hp.threshold.check}
 
 #spell.pending.check energy / energy.max() < 0.7 || spell.cast.index > 0
