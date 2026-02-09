@@ -52,7 +52,7 @@ count.calc:
 frame.end:
   lis("count" . element, if({count.get} > 0, {count.get} + 1, 0))
   waitframe()
-  gotoif(if(impulse() == "key.a", tab, buy), limit < 0 || limit > {count.cur})
+  gotoif(if(impulse() == "key.a", tab, buy), isopen("workshop") && (limit < 0 || limit > {count.cur}))
 
 end:
   gss(variable.hidden, "")
