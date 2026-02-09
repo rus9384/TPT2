@@ -1,6 +1,6 @@
 ## Description
 
-This script buys essence for you, much faster than you'd do it with workers.
+Tired of buying essence manually or think workers do it too slowly? Then this script is for you: it buys essence for you, much faster than you'd do it with workers.
 
 To limit the amount of essence you want to buy, set that number to the variable `limit`. If you want it to buy as much as you can afford, set `limit = -1`.
 
