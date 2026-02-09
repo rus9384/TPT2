@@ -1,0 +1,17 @@
+## Description
+
+This script buys essence for you, much faster than you'd do it with workers.
+
+To limit the amount of essence you want to buy, set that number to the variable `limit`. If you want it to buy as much as you can afford, set `limit = -1`.
+
+If you want it to buy only essence from the currently opened element tab, press `z` while the workshop is open. If you want it to buy essence of all elements, press `a` while the workshop is open.
+
+## Requirements
+
+- 1 script.
+
+## Import code
+
+```
+7VvNj9tEFP9XFoN6aHe9trNJ2lWSXbWiXDggIbiQHvwxSUbreMJ4TNh+SNwAiQoEJzggqMSHUBHlwgkJyf7H8MzY2cSZydpTZ8lSryVv7Jl5897v/d7zfNiPtNDFcEZC7fiDR5rtEogC+lsbYh+5tq/DgOghIEPHTQuIHZBhZBjGETu3fTiFxSKLnY31s7avsR9gDAKAoauPEUFwJGpuHomFmKaLpjMbwxAFekgwDMb89thHTqosv6WPxfqa3V4IH4K+McBReKd1+0gHYQiCEAiNs/p94f1u75BKGWTmFPuWYCXvm1bppA1cWwxy3h/HjgAc2Ph8yXgDLGGSemvZcRIgxI6TmS11aLH9Oz0X+Qj3X79/3xhwc83O4E1qpwv27vnQPQP4eO9dQPbIBOwxHfZgwC44CzNTe4dM0ECoIOPRaJlD7LaTIwOz2rsCi+VKKhY1lpDbABwbHU5nkV+RrO0zcK7bQs3bl2s+dKRRbBocTg9Fjg+kGaILfDAFuX2pbWQyBST1G2+36fZqBzKXLToQFbamyCsUtKReWzq/cSoUZ95SEZa8OKmQ+YRuKUHny7JI20VRrrVnhXUhbA365QOLwoBzCFyaDrhlHwFXH2E0vYcQ9kIFqghuB5lVUxgsggiAQJ9Dj0x0T9ZM4F/TTT79cPEj+ftEzI2b7N8o62YC4HhC9CL7VuoCNKNPWz2COs16G6qW0DT+PP4sP5JvJToe1INtTdxJ1VEJpx8kxh3WGek3i8LezsEdOsl3Eg1ubQBsjYDVvP1KeGIrgb8WkeUj/1IAnm3MBeU9XjYVFGP+afxbfiTP4n82sHINhvKPcQeDEEXYBWnutqdAX1yKRrnWHOGzcIJmi2rhVrL+/ye9F1Qasb/kx5MmGioi9x6zBcRfxc/D5Kfk9+rx0LC0Yem2WXo61PIj+bmhaEPR3aNo8jT5YnH8qjSsKLXGZ0oAGC3NdB2EfC5wJ6e/ZnGJqvRaGa/9+DFHYsm4Lc7InE1DNzpsVxvg1TmleCGhfk+YcTrvJ7/E38d/ZLz9uregH8cizYyWdGmq46SU8Iraryy/xJ+cZHr95b2lInuUL/HR2hVdXaczpDPTDT5KnnOM42+GOPnzbvUJq9GClschWyqHF2EIOVYMyY/XsJUFpNhvK1kpl10tgjJNzuvR5KB+45Tm1fwsXuZozdC8xgfX0JGumzYsub4sqSrxNP5SLIhuUkQVn1RVIWkybhNLOxxLTcZtWHKFGTcdNysl3NJLCg2Xdp5LqpvWLwWXhEXKWDUMvMYMVF0KqPLaBBDLaUZ/TSTsTiQ0o7+GJSXyZW3z7dcqz7fZHtPqi78MgO0ura8wr+Hn7vDzv6ND1dd5r0Ctl9wAElF6R4woThG4EaL9uZLGXrwbn43c5jYkI5wOsGRjOpHPr8cL0ews2rM0LYLmdJ828NBcT4tmIFjPvPmQUmzFjRtS8TW/4L62xaa0lVm3UoOrJgYLFqot3egvoXyHhaSp2M5SbNdSbHek2K6t2K6j2K6r2O62Yrs7Zap2uauNq8/adX1qJOpj9XOakEgy0ajwGY/2YF9Lq3nw4oOxyimPyshClUlgEZiqQ/8/pIUBfWAca8Wu97WZ7Z7ZY1qWXjiRlwKoHR+Y+1oUgrvZJcERePLgyb8=
+```
