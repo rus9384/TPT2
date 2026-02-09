@@ -1,0 +1,59 @@
+#script.name Essence Clicker
+:name {script.name}
+
+:import TPT2.lib.general
+:import TPT2.lib.math
+:budget_cap max
+
+:const string variable.hidden "<size=0>rus9384.essense"
+:local double element
+:local double resource
+:local int step
+:local vector bounds
+:local int limit
+#count.get lig("count" . element)
+#count.min {lua(return string.nested([[min(lig("count" . %2), %1)]], [[1,2,3,4,5,6,7,8,9,lig("count" . 10)]]))}
+#count.cur if(impulse() == "key.a", {count.min}, {count.get})
+
+key.a()
+key.z()
+
+isopen("workshop")
+
+limit = 0
+gotoif(end, gsg(variable.hidden) == "</size>")
+#limit.message "<color=#FF0><size=16>Essence Clicker: Set the limit in the script</size></color>"
+gss(variable.hidden, "</size>" . if(limit == 0, {limit.message}, ""))
+goto(if(limit == 0, 99, if(impulse() == "key.a", tab, buy)))
+
+tab:
+  element = element % 10. + 1.
+  gotoif(tab, {count.get} >= limit)
+  {click.stretchable((element - 0.5) / 10., 1., 766. / 1920., 15. / 1920., 0., 630. / 1080.)} ; Element
+
+buy:
+  resource = resource("workshop.resources")
+  {click.relative(1044. / 1920.,  71. / 1080., 0., 1.)} ; Essence
+  {click.relative(1044. / 1920., 333. / 1080., 0., 1.)} ; Hits
+  {click.relative(1044. / 1920., 243. / 1080., 0., 1.)} ; Kills
+
+gotoif(frame.end, {count.get} > 0 ||\
+                  resource / resource("workshop.resources") - 1. < 1e-15) ; Impossible to estimate number of essence
+
+bounds = vec(1., 58614.) ; 58614 - max possible essence
+count.calc:
+  #middle i2d(d2i(x(bounds)) + d2i((y(bounds) - x(bounds)) / 2.))
+  #estimate resource("workshop.resources") + 3e14 * {middle}^(3. + {middle} / 1000.)
+  bounds = if({estimate} == resource, bounds,\
+           if({estimate} < resource, vec({middle} + 1., y(bounds)), vec(x(bounds), {middle} - 1.)))
+  gotoif(count.calc, {estimate} != resource)
+  lis("count" . element, d2i({middle}))
+
+frame.end:
+  lis("count" . element, if({count.get} > 0, {count.get} + 1, 0))
+  waitframe()
+  gotoif(if(impulse() == "key.a", tab, buy), limit < 0 || limit > {count.cur})
+
+end:
+  gss(variable.hidden, "")
+  stop("{script.name}")
