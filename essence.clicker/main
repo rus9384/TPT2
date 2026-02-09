@@ -1,4 +1,4 @@
-#script.name Essence Clicker
+#script.name Essence Clicker 1.0.1
 :name {script.name}
 
 :import TPT2.lib.general
@@ -21,9 +21,9 @@ key.z()
 isopen("workshop")
 
 limit = 0
-gotoif(end, gsg(variable.hidden) == "</size>")
+gotoif(end, gsg(variable.hidden) == "running</size>")
 #limit.message "<color=#FF0><size=16>Essence Clicker: Set the limit in the script</size></color>"
-gss(variable.hidden, "</size>" . if(limit == 0, {limit.message}, ""))
+gss(variable.hidden, "running</size>" . if(limit == 0, {limit.message}, ""))
 goto(if(limit == 0, 99, if(impulse() == "key.a", tab, buy)))
 
 tab:
@@ -55,5 +55,5 @@ frame.end:
   gotoif(if(impulse() == "key.a", tab, buy), isopen("workshop") && (limit < 0 || limit > {count.cur}))
 
 end:
-  gss(variable.hidden, "")
+  gss(variable.hidden, "</size>")
   stop("{script.name}")
