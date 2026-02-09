@@ -2,9 +2,13 @@
 
 Tired of buying essence manually or think workers do it too slowly? Then this script is for you: it buys essence for you, much faster than you'd do it with workers.
 
+Make sure that you are on the second floor of the Workshop and that the Essence tab is selected.
+
 To limit the amount of essence you want to buy, set that number to the variable `limit`. If you want it to buy as much as you can afford, set `limit = -1`.
 
 If you want it to buy only essence from the currently opened element tab, press `z` while the workshop is open. If you want it to buy essence of all elements, press `a` while the workshop is open.
+
+To stop the script manually, press `a` or `z` again, or quit the Workshop.
 
 ## Requirements
 
