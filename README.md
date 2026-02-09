@@ -11,3 +11,7 @@ A collection of AI scripts and blueprints for The Perfect Tower 2 by rus9384.
 # Blueprints
 
 ### [Watchtower](https://github.com/rus9384/TPT2/blob/main/watchtower/README.md)
+
+# Library
+
+### [TPT2.lib](https://github.com/rus9384/TPT2/blob/main/lib)
